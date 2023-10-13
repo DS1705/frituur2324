@@ -1,1 +1,4 @@
-<p>message works!</p>
+<div class="messagedisplay" [hidden]="this.message==''">
+  <p class="message">{{this.message}}</p>
+  <p class="close" (click)="this.messageService.closeMessage()">x</p>
+</div>

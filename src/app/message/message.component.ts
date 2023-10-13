@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MessageService} from "../message.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-message',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
+  message: string="";
+  sub!:Subscription;
+  constructor(public messageService:MessageService) { }
 
-  constructor() { }
 
   ngOnInit(): void {
+    this.sub=this.messageService.message.subscribe(
+      (message:string) =>
+      {
+        this.message=message;
+      }
+    )
   }
 
+  ngOnDestroy():void{
+    this.sub.unsubscribe();
+  }
 }

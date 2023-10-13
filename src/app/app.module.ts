@@ -17,9 +17,12 @@ import {MessageService} from "./message.service";
 import {MenuPageComponent} from "./menu-page/menu-page.component";
 import { SearchPipe } from './search.pipe';
 import { ItembycategoryPipe } from './itembycategory.pipe';
+import { CartPageComponent } from './cart-page/cart-page.component';
+import {AuthModule} from "./auth/auth.module";
 
 const routes: Routes = [
   {path: 'category/:id', component: MenuPageComponent},
+  {path:'cart',component: CartPageComponent},
   {path:'',component:HomeComponent},
 ];
 
@@ -32,12 +35,14 @@ const routes: Routes = [
     MenuPageComponent,
     MessageComponent,
     SearchPipe,
-    ItembycategoryPipe
+    ItembycategoryPipe,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    AuthModule,
     RouterModule.forRoot(routes),
     provideFirebaseApp(()=>initializeApp(environment.firebase)),
     provideFirestore(()=>getFirestore()),

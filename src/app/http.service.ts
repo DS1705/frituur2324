@@ -30,12 +30,12 @@ export class HttpService {
   orders: Order[] = [];
   currentorder: number = 1;
   search: string="";
-  private admins!: Admin[];
-  private users!: User[];
+  admins!: Admin[];
+  users!: User[];
 
   constructor(private db:Firestore) { }
 
-  getCategories(): void {
+  getCategories():void {
     collectionData<Category>(
       collection(this.db, 'categories') as CollectionReference<Category>,
       {idField: 'id'}
@@ -70,6 +70,27 @@ export class HttpService {
     const newID=doc(collection(this.db,'id')).id;
     const OrderCollection = collection(this.db, 'orders/'+newID);
     return from(addDoc(OrderCollection, order));
+  }
+
+  getOrders(): void {
+    collectionData<Order>(
+      query<Order>(
+        collection(this.db, 'orders') as CollectionReference<Order>,
+        where("orderID", "==", this.currentorder)
+      ),
+      {idField: 'id'}
+    ).subscribe(
+      (response: Order[]) => {
+        this.orders = response;
+      }
+    )
+  }
+
+  deleteOrder(order: Order): void {
+    from(deleteDoc(doc(this.db, 'orders/' + order.id))).subscribe(
+      (response: any) => {
+        console.log('deleted: ', response);
+      })
   }
 
 }

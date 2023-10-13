@@ -1,0 +1,21 @@
+<div class="row" *ngFor="let order of httpService.orders">
+  <div class="col-3">
+    <p>{{getItemById(order).name}}</p>
+  </div>
+  <div class="col-3">
+    <p>{{getItemById(order).price|currency:'EUR':'symbol'}}</p>
+  </div>
+  <div class="col-3">
+    <a class="cursor" (click)="down(order)">-</a><input type="number" class="input" [(ngModel)]="order.amount" (blur)="update(order)"><a class="cursor" (click)="up(order)">+</a>
+  </div>
+  <div class="col-3">
+    <button class="delete" (click)="httpService.deleteOrder(order)">Verwijderen</button>
+  </div>
+</div>
+<div class="row">
+  <p class="col-4">aantal: {{getOrdersAmount()}} item(s)</p>
+  <p class="col-4">totaal: {{getOrdersPrice()|currency:'EUR':'symbol'}}</p>
+  <div class="col-4">
+    <button (click)="newOrder()" class="delete">Bestellen</button>
+  </div>
+</div>

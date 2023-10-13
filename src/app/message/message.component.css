@@ -1,0 +1,19 @@
+.messagedisplay{
+  color: wheat;
+  border-radius: 5px;
+  border: red 2px solid;
+  background-color: indianred;
+  padding: 0.1% 2%;
+}
+.message{
+  display: inline;
+  padding-left: 2%;
+}
+.close{
+  display:inline;
+  font-weight: bolder;
+  color: wheat;
+  padding-right: 2%;
+  margin-bottom: 2%;
+  vertical-align: center;
+}
