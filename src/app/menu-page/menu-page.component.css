@@ -1,0 +1,26 @@
+.cursor{
+  cursor: pointer;
+  padding: 7px;
+  font-size: 1.4em;
+}
+.col-3{
+  text-align: center;
+  font-size: large;
+  color: #c4a349;
+}
+.row{
+  margin: 2% 0%;
+  border-bottom: solid 2px #c4a349;
+}
+.add{
+  background-color: #c4a349;
+  border: none;
+  color: white;
+  padding: 0.2em;
+  border-radius: 5px;
+}
+.input{
+  border-color: #c4a349;
+  border-radius: 5px;
+  color: #c4a349;
+}

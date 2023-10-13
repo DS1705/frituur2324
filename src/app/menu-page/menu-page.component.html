@@ -1,0 +1,21 @@
+<app-message></app-message>
+<div class="row" *ngFor="let item of httpService.menu|itembycategory :categoryID|search:httpService.search">
+  <div class="col-3">
+    <p>{{item.name}}</p>
+  </div>
+  <div class="col-3">
+    <a class="cursor" (click)="item.amount=down(item)">-</a>
+    <input class="input" type="number" min=0 [(ngModel)]="item.amount">
+    <a class="cursor" (click)="item.amount=up(item)">+</a>
+  </div>
+  <div class="col-3">
+    <p>{{item.price|currency:'EUR':'symbol'}}</p>
+  </div>
+  <div class="col-3">
+    <button class="add" (click)="addcart(item)">Toevoegen</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-9"></div>
+  <div class="col-3"><button class="add" (click)="addall()">Alle Toevoegen</button></div>
+</div>

@@ -1,0 +1,32 @@
+nav{
+  background-color: #c4a349;
+}
+button{
+  background-color: #c4a349;
+  color: white;
+  border: none;
+  height: auto;
+  font-size: 1.2em;
+  padding: 0.5em;
+}
+div{
+  display: inline;
+}
+button:hover{
+  background-color: white;
+  color: #c4a349;
+}
+.active{
+  background-color: white;
+  color: #c4a349;
+}
+.right{
+  float: right;
+}
+.input{
+  border-color: #c4a349;
+  border-radius: 5px;
+  color: #c4a349;
+  font-size: large;
+  vertical-align: center;
+}

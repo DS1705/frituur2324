@@ -1,0 +1,20 @@
+<nav>
+  <div>
+    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" [routerLink]="['/admin/category']">Category</button>
+    <button routerLinkActive="active" [routerLink]="['/admin/item']">Item</button>
+  </div>
+  <div>
+    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"
+            [routerLink]="['/category',category.id]"
+            *ngFor="let category of httpService.categories">{{category.name}}</button>
+  </div>
+  <div class="right">
+    <input class="input" type="text" placeholder="search" [(ngModel)]="httpService.search">
+    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" [routerLink]="['/cart']">
+      Cart
+    </button>
+    <button [routerLink]="['/login']">Login</button>
+    <button>Logout</button>
+  </div>
+</nav>
+

@@ -1,0 +1,9 @@
+.background-friet{
+  background-image: url("../../assets/img/unnamed.jpg");
+  background-size: auto;
+  background-position: center;
+}
+img{
+  width: 25%;
+  margin: 2% 35%;
+}
