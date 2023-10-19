@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from "../http.service";
 import {Order} from "../models/order";
 import {MenuItem} from "../models/menu-item";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-cart-page',
@@ -11,12 +12,13 @@ import {MenuItem} from "../models/menu-item";
 export class CartPageComponent implements OnInit {
   private value: MenuItem | undefined;
 
-  constructor(public httpService: HttpService) {
+  constructor(public httpService: HttpService, private authService:AuthService) {
   }
 
   ngOnInit(): void {
-    this.httpService.getOrders();
+    this.httpService.getOrders(this.authService.currentUser);
     this.httpService.getItems();
+    console.log(this.authService.currentUser);
   }
 
   getItemById(order: Order): MenuItem {
@@ -68,8 +70,11 @@ export class CartPageComponent implements OnInit {
   }
 
   newOrder() {
-    this.httpService.currentorder = this.httpService.currentorder + 1;
-    this.httpService.getOrders();
+    if(this.authService.currentUser){
+      this.authService.currentUser.orderID=this.authService.currentUser.orderID+1;
+      this.httpService.updateUser(this.authService.currentUser);
+    }
+
   }
 
 }

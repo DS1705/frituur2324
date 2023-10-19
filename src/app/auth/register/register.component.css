@@ -1,0 +1,43 @@
+form{
+  border:solid;
+  border-color: #c4a349;
+  border-radius: 25px;
+  padding: 2em;
+  width: fit-content;
+}
+input{
+  border-color: #c4a349;
+  border-radius: 5px;
+  color: #c4a349;
+  font-size: large;
+  vertical-align: center;
+  display: block;
+  margin: 1em;
+  padding: 0.3em;
+}
+p{
+  color: #c4a349;
+  display: inline;
+}
+.parrent{
+  display: flex;
+  justify-content: center;
+}
+button{
+  background-color: #c4a349;
+  border: none;
+  color: white;
+  padding: 0.2em;
+  border-radius: 5px;
+  font-size: large;
+  width: 85%;
+  margin: 0 1em ;
+}
+div{
+  text-align: center;
+}
+
+button:disabled{
+  background-color: #dc7700;
+}
+

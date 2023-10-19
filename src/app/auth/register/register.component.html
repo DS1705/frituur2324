@@ -1,1 +1,16 @@
-<p>register works!</p>
+<div class="parrent">
+  <form [formGroup]="form" (change)="onChange()" (ngSubmit)="onSubmit()">
+    <div *ngIf="!email.valid&&email.touched">
+      <p *ngIf="email.errors && email.errors['invalidEmail']">enter correct email</p>
+      <p *ngIf="email.errors && email.errors['usedEmail']">email already in use</p>
+    </div>
+    <input placeholder="email" formControlName="email" type="email">
+    <div *ngIf="!password.valid&&password.touched">
+      <p *ngIf="password.errors && password.errors['minlength']">minimum 6 tekens</p>
+      <p *ngIf="password.errors && password.errors['required']">password is required</p>
+    </div>
+    <input placeholder="password" formControlName="password" type="password">
+    <button [disabled]="!form.valid" type="submit">Register</button>
+  </form>
+</div>
+

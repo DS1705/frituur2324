@@ -12,6 +12,7 @@ export class NavComponent implements OnInit {
   constructor(public httpService:HttpService,public authService:AuthService) { }
 
   ngOnInit(): void {
+    this.httpService.getCategories();
   }
 
 }

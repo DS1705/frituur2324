@@ -19,11 +19,14 @@ import { SearchPipe } from './search.pipe';
 import { ItembycategoryPipe } from './itembycategory.pipe';
 import { CartPageComponent } from './cart-page/cart-page.component';
 import {AuthModule} from "./auth/auth.module";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: 'category/:id', component: MenuPageComponent},
   {path:'cart',component: CartPageComponent},
   {path:'',component:HomeComponent},
+  {path: 'admin',loadChildren:()=>import('./admin/admin.module').then(m=>m.AdminModule)},
+  {path:'**',component: PageNotFoundComponent}
 ];
 
 @NgModule({
@@ -36,7 +39,8 @@ const routes: Routes = [
     MessageComponent,
     SearchPipe,
     ItembycategoryPipe,
-    CartPageComponent
+    CartPageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

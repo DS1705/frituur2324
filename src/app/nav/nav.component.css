@@ -30,3 +30,9 @@ button:hover{
   font-size: large;
   vertical-align: center;
 }
+p{
+  display: inline;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.5em;
+}

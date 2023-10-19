@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "@angular/fire/auth";
 import {HttpService} from "../http.service";
 import {Router} from "@angular/router";
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   token:string|null=null;
+  currentUser:User|null=null;
 
   constructor(private httpService:HttpService,private router:Router,private auth: Auth) {
     if(localStorage.getItem('token')){
       this.token=localStorage.getItem('token');
+    }
+    if(localStorage.getItem('currentUser')){
+      this.currentUser=JSON.parse(localStorage.getItem('currentUser')||'{}');
     }
   }
 
@@ -22,6 +27,12 @@ export class AuthService {
             .then(
               (token:string)=>{
                 this.token=token;
+                this.httpService.getUser(this.auth.currentUser?.uid).subscribe(
+                  (data)=>{
+                    this.currentUser=data;
+                    localStorage.setItem('currentUser',JSON.stringify(data))
+                  }
+                );
                 localStorage.setItem('token',token);
                 return true
               }
@@ -42,17 +53,21 @@ export class AuthService {
         console.log(error);
         return error;
       })
-      .then(()=>{
+      .then((user)=>{
+        this.httpService.setUser(new User(user.user.uid,0,user.user.email)).then(()=>{
           return 'success';
+        });
+        return '';
         }
       )
   }
 
   logout(){
     this.auth.signOut();
-    this.token= null;
-    localStorage.removeItem('token');
-    this.router.navigate([''])
+    this.token = null;
+    this.currentUser=null;
+    localStorage.clear();
+    this.router.navigate(['']);
   }
 
   isLoggedIn():boolean{
@@ -85,8 +100,12 @@ export class AuthService {
     }
   }
 
-  isEmailUsed(){
-
+  isEmailUsed(email:string){
+    const result = this.httpService.users.find((user)=>user.email==email)
+    if(result){
+      return true;
+    }
+    return false;
   }
 
 }

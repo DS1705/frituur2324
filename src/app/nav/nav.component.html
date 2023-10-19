@@ -13,6 +13,7 @@
     <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" [routerLink]="['/cart']">
       Cart
     </button>
+    <p *ngIf="authService.currentUser">{{authService.currentUser.email}}</p>
     <button *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']">Login</button>
     <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()">Logout</button>
   </div>

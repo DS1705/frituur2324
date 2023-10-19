@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Category} from "./models/category";
 import {Observable} from "rxjs";
 import {MenuItem} from "./models/menu-item";
@@ -25,17 +25,19 @@ import {User} from "./models/user";
 })
 export class HttpService {
 
-  categories: Category[]=[];
-  menu: MenuItem[]=[new MenuItem("grote friet",3.60,"3")];
+  categories: Category[] = [];
+  menu: MenuItem[] = [new MenuItem("grote friet", 3.60, "3")];
   orders: Order[] = [];
   currentorder: number = 1;
-  search: string="";
+  search: string = "";
   admins!: Admin[];
   users!: User[];
 
-  constructor(private db:Firestore) { }
+  constructor(private db: Firestore) {
+    this.getUsers()
+  }
 
-  getCategories():void {
+  getCategories(): void {
     collectionData<Category>(
       collection(this.db, 'categories') as CollectionReference<Category>,
       {idField: 'id'}
@@ -67,16 +69,22 @@ export class HttpService {
   }
 
   addOrder(order: Order) {
-    const newID=doc(collection(this.db,'id')).id;
-    const OrderCollection = collection(this.db, 'orders/'+newID);
-    return from(addDoc(OrderCollection, order));
+    const newID = doc(collection(this.db, 'id')).id;
+    console.log(newID);
+    //order.id=newID;
+    console.log(order);
+    const OrderRef = doc(this.db, 'orders/' + newID);
+    return from(setDoc(OrderRef, order));
   }
 
-  getOrders(): void {
+  getOrders(user: User | null): void {
+    if (user == null) {
+      return;
+    }
     collectionData<Order>(
       query<Order>(
         collection(this.db, 'orders') as CollectionReference<Order>,
-        where("orderID", "==", this.currentorder)
+        where("orderID", "==", user.orderID),where("userID","==",user.id)
       ),
       {idField: 'id'}
     ).subscribe(
@@ -91,6 +99,26 @@ export class HttpService {
       (response: any) => {
         console.log('deleted: ', response);
       })
+  }
+
+  getUser(id: string | undefined): Observable<User> {
+    return docData<User>(doc(this.db, '/users/' + id) as DocumentReference<User>,{idField:"id"});
+  }
+  getUsers() {
+    return collectionData<User>(
+        collection(this.db, 'items') as CollectionReference<User>,
+        {idField: 'id'}
+    )
+  }
+  updateUser(user:User){
+    const UserDoc = doc(this.db, 'users/' + user.id) as DocumentReference<User>;
+    return from(updateDoc(UserDoc, user));
+  }
+  setUser(user:User){
+    const userDoc=doc(this.db,'users/'+user.id) as DocumentReference<User>;
+    delete user.id;
+    console.log(userDoc,user);
+    return setDoc(userDoc,user);
   }
 
 }

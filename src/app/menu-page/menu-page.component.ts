@@ -5,6 +5,7 @@ import {CurrencyPipe} from "@angular/common";
 import {ActivatedRoute, Params} from "@angular/router";
 import {Order} from "../models/order";
 import {MessageService} from "../message.service";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-menu-page',
@@ -15,7 +16,7 @@ export class MenuPageComponent implements OnInit {
 
   categoryID: string="";
 
-  constructor(private route:ActivatedRoute ,public httpService:HttpService,public currencyPipe:CurrencyPipe,private messageService:MessageService) { }
+  constructor(private authService:AuthService,private route:ActivatedRoute ,public httpService:HttpService,public currencyPipe:CurrencyPipe,private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.httpService.getCategories();
@@ -54,12 +55,14 @@ export class MenuPageComponent implements OnInit {
       if (this.checkItemInOrders(item)) {
         this.httpService.updateOrder(this.addAmountToOrder(this.getOrderByItem(item), item)).subscribe();
       } else {
-        this.httpService.addOrder(new Order(this.httpService.currentorder, item.id, item.amount)).subscribe(
+        const order=new Order(this.authService.currentUser?.orderID||0, item.id,this.authService.currentUser?.id||"" ,item.amount);
+        console.log(order);
+        this.httpService.addOrder(order).subscribe(
           (response) => {
             console.log('order added: ', response);
             this.httpService.menu[this.getIndexByItemId(item.id)].amount = 0;
           },
-          error => console.log('error: ', error)
+          (error) => {console.log('error: ', error);}
         );
       }
     }
@@ -70,7 +73,7 @@ export class MenuPageComponent implements OnInit {
   }
 
   getOrderByItem(item:MenuItem):Order{
-    return this.httpService.orders.find(order=>order.menuitemID==item.id)||new Order(0,"",0);
+    return this.httpService.orders.find(order=>order.menuitemID==item.id)||new Order(0,"","",0);
   }
   addAmountToOrder(order:Order,item:MenuItem):Order{
     order.amount=order.amount+item.amount;

@@ -22,6 +22,7 @@ p{
 a{
   color: #dc7700;
   display: inline;
+  cursor: pointer;
 }
 .parrent{
   display: flex;
