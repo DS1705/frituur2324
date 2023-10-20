@@ -73,7 +73,7 @@ export class HttpService {
     console.log(newID);
     //order.id=newID;
     console.log(order);
-    const OrderRef = doc(this.db, 'orders/' + newID);
+    const OrderRef = doc(this.db, '/orders/' + newID);
     return from(setDoc(OrderRef, order));
   }
 
@@ -111,11 +111,11 @@ export class HttpService {
     )
   }
   updateUser(user:User){
-    const UserDoc = doc(this.db, 'users/' + user.id) as DocumentReference<User>;
+    const UserDoc = doc(this.db, '/users/' + user.id) as DocumentReference<User>;
     return from(updateDoc(UserDoc, user));
   }
   setUser(user:User){
-    const userDoc=doc(this.db,'users/'+user.id) as DocumentReference<User>;
+    const userDoc=doc(this.db,'/users/'+user.id) as DocumentReference<User>;
     delete user.id;
     console.log(userDoc,user);
     return setDoc(userDoc,user);

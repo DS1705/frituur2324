@@ -18,6 +18,9 @@ const adminRoutes:Routes=[
   declarations: [],
   imports: [
     RouterModule.forChild(adminRoutes)
+  ],
+  exports:[
+    RouterModule
   ]
 })
 export class AdminRoutingModule { }

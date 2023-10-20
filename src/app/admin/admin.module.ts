@@ -17,7 +17,6 @@ import {RouterModule} from "@angular/router";
   imports: [
     CommonModule,
     AdminRoutingModule,
-    RouterModule,
   ]
 })
 export class AdminModule { }
