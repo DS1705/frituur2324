@@ -74,7 +74,7 @@ export class HttpService {
     //order.id=newID;
     console.log(order);
     const OrderRef = doc(this.db, '/orders/' + newID);
-    return from(setDoc(OrderRef, order));
+    return from(setDoc(OrderRef, {...order}));
   }
 
   getOrders(user: User | null): void {
@@ -116,9 +116,8 @@ export class HttpService {
   }
   setUser(user:User){
     const userDoc=doc(this.db,'/users/'+user.id) as DocumentReference<User>;
-    delete user.id;
     console.log(userDoc,user);
-    return setDoc(userDoc,user);
+    return setDoc(userDoc,{orderID:user.orderID, email:user.email});
   }
 
 }
